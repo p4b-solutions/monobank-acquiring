@@ -1,6 +1,6 @@
 {
   "name": "@pro4biz/monobank-acquiring",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Monobank acquiring API client",
   "module": "./dist/index.esm.js",
   "main": "./dist/index.cjs.js",
