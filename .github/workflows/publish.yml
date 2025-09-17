@@ -31,7 +31,7 @@ jobs:
         run: grunt increment
 
       - name: Build package
-        run: rollup -c rollup.config.js
+        run: npx rollup -c rollup.config.js
 
       - name: Setup npm for publishing
         if: github.event_name == 'push'
