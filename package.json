@@ -12,7 +12,8 @@
     }
   },
   "files": [
-    "dist/**"
+    "dist/**",
+    "README.md"
   ],
   "prettier": "@pro4biz/prettier",
   "author": {
