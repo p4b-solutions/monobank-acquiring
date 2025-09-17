@@ -10,13 +10,19 @@ on:
 
 jobs:
   publish:
-    runs-on: [self-hosted]
+    runs-on: ubuntu-latest
+    # runs-on: [self-hosted, linux, arm64]
     permissions:
       contents: write
       packages: write
     steps:
       - name: Checkout main repo
         uses: actions/checkout@v4
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
 
       - name: Install node_modules
         run: npm install
