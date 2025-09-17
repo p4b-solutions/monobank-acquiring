@@ -10,7 +10,7 @@ on:
 
 jobs:
   publish:
-    runs-on: [self-hosted, linux]
+    runs-on: [self-hosted]
     permissions:
       contents: write
       packages: write
