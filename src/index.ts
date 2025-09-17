@@ -16,6 +16,7 @@ import {
 
 import crypto from 'crypto'
 
+export { Invoice } from './types'
 export default class MonoAcquiring {
   private token: string
   private public_key: string | null = null

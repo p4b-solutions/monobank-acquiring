@@ -4,12 +4,11 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Debug",
-      "console": "integratedTerminal",
+      "name": "Test",
       "program": "${workspaceFolder}/test/index.test.ts",
-      "preLaunchTask": "npm: debug",
-      "sourceMaps": true,
-      "outFiles": ["${workspaceFolder}/build/**/*.js"]
+      "runtimeArgs": ["-r", "ts-node/register"],
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"]
     }
   ]
 }

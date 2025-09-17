@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import MonoAcquiring from '../src'
 
 console.clear()
@@ -16,10 +17,10 @@ async function test() {
 
     const client = new MonoAcquiring(token)
 
-    // //>>>  Отримати дані про мерчанта
-    // const merchant = await client.getMerchant()
-    // console.log('Merchant: ', merchant)
-    // await wait(5000)
+    //>>>  Отримати дані про мерчанта
+    const merchant = await client.getMerchant()
+    console.log('Merchant: ', merchant)
+    await wait(5000)
 
     //>>>  Створити рахунок для оплати
     // const ticket = await client.createInvoice({ amount: 12000, merchantPaymInfo: { reference: id(), destination }, saveCardData: { saveCard: true } })

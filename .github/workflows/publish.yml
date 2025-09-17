@@ -1,0 +1,68 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  publish:
+    runs-on: [self-hosted, linux, arm64]
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      - name: Checkout main repo
+        uses: actions/checkout@v4
+
+      - name: Install node_modules
+        run: npm install
+
+      - name: Bump version
+        run: grunt increment
+
+      - name: Build package
+        run: rollup -c rollup.config.js
+
+      - name: Setup npm for publishing
+        if: github.event_name == 'push'
+        shell: bash
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_ACCESS_TOKEN }}" > ~/.npmrc
+          echo "registry=https://registry.npmjs.org/" >> ~/.npmrc
+
+      - name: Publish to npm
+        if: github.event_name == 'push'
+        shell: bash
+        run: |
+          # Перевіряємо, чи не опублікована вже поточна версія
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          PACKAGE_NAME=$(node -p "require('./package.json').name")
+
+          if npm view "$PACKAGE_NAME@$PACKAGE_VERSION" version 2>/dev/null; then
+            echo "Version $PACKAGE_VERSION already exists on npm, skipping publish"
+          else
+            echo "Publishing version $PACKAGE_VERSION to npm"
+            npm publish --access public
+          fi
+
+      - name: Commit and push bump version
+        if: github.event_name == 'push'
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git status
+          git add .
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "CI: auto-commit after publish [skip ci]"
+          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} HEAD:main
