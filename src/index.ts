@@ -1,3 +1,5 @@
+import crypto from 'node:crypto'
+
 import {
   BaseApiError,
   Merchant,
@@ -14,9 +16,7 @@ import {
   WalletPaymentTicket
 } from './types'
 
-import crypto from 'crypto'
-
-export { Invoice } from './types'
+export type * from './types'
 export default class MonoAcquiring {
   private token: string
   private public_key: string | null = null
