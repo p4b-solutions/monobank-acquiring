@@ -15,5 +15,14 @@ module.exports = {
     }
   ],
   external: [],
-  plugins: [typescript({ tsconfig: './tsconfig.json', sourceMap: false, declaration: true, outDir: 'dist', exclude: ['**/*.test.ts'] })]
+  plugins: [
+    typescript({
+      tsconfig: './tsconfig.json',
+      sourceMap: false,
+      declaration: true,
+      declarationDir: 'dist',
+      rootDir: 'src',
+      exclude: ['test/**/*']
+    })
+  ]
 }
